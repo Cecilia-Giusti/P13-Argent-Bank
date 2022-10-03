@@ -4,3 +4,8 @@ export   interface featureDataItem {
     title: string;
     content: string;
   }
+
+  export interface loginInt {
+    email: string;
+    password: string;
+  }
