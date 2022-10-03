@@ -108,6 +108,11 @@ body {
   font-size: 0.9rem;
 }
 
+.error {
+  color: red;
+  font-size: 14px;
+}
+
 @media (min-width: 920px) {
   .hero {
     height: 400px;
