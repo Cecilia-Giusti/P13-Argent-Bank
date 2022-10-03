@@ -1,10 +1,25 @@
 import axios from "axios";
 
-export const connectUser = (data, formMessage) => {
+export const connectUser = (data, formMessage, setUserData, setLoggedIn) => {
   return axios
     .post("http://localhost:3001/api/v1/user/login", data)
     .then((res) => {
-      console.log(res.status);
+      let config = {
+        method: "post",
+        url: "http://localhost:3001/api/v1/user/profile",
+        headers: {
+          Authorization: `Bearer ${res.data.body.token}`,
+        },
+      };
+
+      axios(config)
+        .then((res) => {
+          setLoggedIn(true);
+          setUserData(res.data.body);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     })
     .catch((err) => {
       console.log(err);

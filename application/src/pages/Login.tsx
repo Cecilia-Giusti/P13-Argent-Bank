@@ -1,9 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { loginInt } from "../models";
 import { connectUser } from "../services/login";
+import { useNavigate } from "react-router";
 
 const Login: React.FC = () => {
   const formLogin = useRef<HTMLFormElement>(null);
+  const [userData, setUserData] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,12 +27,13 @@ const Login: React.FC = () => {
         password: newPassword.value,
       };
 
-      console.log(newLogin);
-
       // POST
-      connectUser(newLogin, formMessage);
-
-      formLogin.current.reset();
+      connectUser(newLogin, formMessage, setUserData, setLoggedIn);
+      if (loggedIn) {
+        console.log(userData);
+        formLogin.current.reset();
+        return navigate("/profile");
+      }
     }
   };
 
@@ -50,11 +55,6 @@ const Login: React.FC = () => {
             <input type="checkbox" id="remember-me" />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-          {/* <!-- PLACEHOLDER DUE TO STATIC SITE -->
-          <a href="./user.html" className="sign-in-button">
-            Sign In
-          </a> */}
-          {/* <!-- SHOULD BE THE BUTTON BELOW --> */}
           <input type="submit" className="sign-in-button" value="Sign In" />
           <div className="formMessage"></div>
         </form>
