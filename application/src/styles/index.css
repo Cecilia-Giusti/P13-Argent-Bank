@@ -47,24 +47,29 @@ body {
   padding: 5px 20px;
 }
 
-.main-nav a {
+.main-nav a,
+.button-no-style {
   font-weight: bold;
   color: #2c3e50;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
 .main-nav a.router-link-exact-active {
   color: #42b983;
 }
 
-.main-nav-item {
+.main-nav-item,
+.button-no-style {
   text-decoration: none;
   margin-right: 0.5rem;
 }
-.main-nav-item i {
+.main-nav-item i,
+.button-no-style i {
   margin-right: 5px;
 }
 
-.main-nav-item:hover {
+.main-nav-item:hover,
+.button-no-style:hover {
   text-decoration: underline;
 }
 
@@ -111,6 +116,13 @@ body {
 .error {
   color: red;
   font-size: 14px;
+}
+
+.button-no-style {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 16px;
 }
 
 @media (min-width: 920px) {

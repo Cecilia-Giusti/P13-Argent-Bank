@@ -3,10 +3,15 @@ import { loginInt } from "../models";
 import { connectUser } from "../services/login";
 import { useNavigate } from "react-router";
 
-const Login: React.FC = () => {
+type Props = {
+  loggedIn: boolean;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Login = ({ loggedIn, setLoggedIn }: Props) => {
   const formLogin = useRef<HTMLFormElement>(null);
   const [userData, setUserData] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
