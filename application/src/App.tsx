@@ -11,6 +11,7 @@ import { userDataInt } from "./models";
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState<userDataInt>({});
+  const [token, setToken] = useState("");
   return (
     <BrowserRouter>
       <Header
@@ -27,11 +28,21 @@ const App: React.FC = () => {
               loggedIn={loggedIn}
               setLoggedIn={setLoggedIn}
               setUserData={setUserData}
+              setToken={setToken}
             />
           }
         />
         {loggedIn && userData && (
-          <Route path="/profile" element={<Profile userData={userData} />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                userData={userData}
+                token={token}
+                setUserData={setUserData}
+              />
+            }
+          />
         )}
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -4,13 +4,15 @@ export const connectUser = async (
   data,
   formMessage,
   setUserData,
-  setLoggedIn
+  setLoggedIn,
+  setToken
 ) => {
   try {
     const res = await axios.post(
       "http://localhost:3001/api/v1/user/login",
       data
     );
+    setToken(res.data.body.token);
     let config = {
       method: "post",
       url: "http://localhost:3001/api/v1/user/profile",

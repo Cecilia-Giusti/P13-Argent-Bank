@@ -24,3 +24,8 @@ export interface accountDataInt {
   amount: number;
   description: string;
 }
+
+export interface editUserDataInt {
+  firstName?: string;
+  lastName?: string;
+}

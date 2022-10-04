@@ -1,11 +1,19 @@
 import Account from "../components/Account";
-import { accountDataInt, userDataInt } from "../models";
+import { accountDataInt, editUserDataInt, userDataInt } from "../models";
+import { useState, useRef } from "react";
+import { editUser } from "../services/editUser";
 
 type Props = {
   userData: userDataInt;
+  token: string;
+  setUserData: React.Dispatch<React.SetStateAction<{}>>;
 };
 
-const Profile = ({ userData }: Props) => {
+const Profile = ({ userData, token, setUserData }: Props) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const formEditUser = useRef<HTMLFormElement>(null);
+
   const accountData: accountDataInt[] = [
     {
       title: "Argent Bank Checking (x8349)",
@@ -23,16 +31,72 @@ const Profile = ({ userData }: Props) => {
       description: "Current Balance",
     },
   ];
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const editMessage = document.querySelector(".editMessage");
+    if (editMessage !== null) {
+      editMessage.innerHTML = "";
+    }
+
+    if (formEditUser.current !== null) {
+      const newFirstName = formEditUser.current[0] as HTMLInputElement;
+      const newLastName = formEditUser.current[1] as HTMLInputElement;
+
+      const newDataUser: editUserDataInt = {
+        firstName: newFirstName.value ? newFirstName.value : userData.firstName,
+        lastName: newLastName.value ? newLastName.value : userData.lastName,
+      };
+
+      // PUT
+      editUser(newDataUser, token, setUserData, editMessage);
+      setIsEditing(false);
+    }
+  };
+
   return (
     <main className="main bg-dark">
-      <div className="header">
-        <h1>
-          Welcome back
-          <br />
-          {userData.firstName} {userData.lastName}
-        </h1>
-        <button className="edit-button">Edit Name</button>
-      </div>
+      {isEditing ? (
+        <div className="header">
+          <h1>Welcome back</h1>
+          <form ref={formEditUser} onSubmit={(e) => handleSubmit(e)}>
+            <input
+              className="edit-input"
+              type="text"
+              placeholder={userData.firstName}
+              autoFocus
+            />
+            <input
+              className="edit-input"
+              type="text"
+              placeholder={userData.lastName}
+            />
+            <br />
+            <input type="submit" className=" edit-button-active" value="Save" />
+
+            <input
+              type="button"
+              className=" edit-button-active"
+              onClick={() => setIsEditing(false)}
+              value="Cancel"
+            />
+            <div className="editMessage"></div>
+          </form>
+        </div>
+      ) : (
+        <div className="header">
+          <h1>
+            Welcome back
+            <br />
+            {userData.firstName} {userData.lastName}
+          </h1>
+          <button className="edit-button" onClick={() => setIsEditing(true)}>
+            Edit Name
+          </button>
+        </div>
+      )}
+
       <h2 className="sr-only">Accounts</h2>
       {accountData.map((account, index) => {
         return <Account key={index} account={account} />;
