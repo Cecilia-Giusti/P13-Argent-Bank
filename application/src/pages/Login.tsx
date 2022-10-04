@@ -7,9 +7,10 @@ type Props = {
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   setUserData: React.Dispatch<React.SetStateAction<{}>>;
+  setToken: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Login = ({ loggedIn, setLoggedIn, setUserData }: Props) => {
+const Login = ({ loggedIn, setLoggedIn, setUserData, setToken }: Props) => {
   const formLogin = useRef<HTMLFormElement>(null);
 
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Login = ({ loggedIn, setLoggedIn, setUserData }: Props) => {
       };
 
       // POST
-      connectUser(newLogin, formMessage, setUserData, setLoggedIn);
+      connectUser(newLogin, formMessage, setUserData, setLoggedIn, setToken);
     }
   };
 
