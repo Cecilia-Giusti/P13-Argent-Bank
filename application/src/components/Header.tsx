@@ -1,6 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const Header = () => {
+type Props = {
+  loggedIn: boolean;
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Header = ({ loggedIn, setLoggedIn }: Props) => {
+  const naviguate = useNavigate();
+  const handleDeconnected = () => {
+    setLoggedIn(false);
+    return naviguate("/");
+  };
+
   return (
     <nav className="main-nav">
       <NavLink className="main-nav-logo" to="/">
@@ -11,12 +22,29 @@ const Header = () => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </NavLink>
-      <div>
-        <NavLink to={"/login"} className="main-nav-item">
-          <i className="fa fa-user-circle"></i>
-          Sign In
-        </NavLink>
-      </div>
+      {loggedIn ? (
+        <div>
+          <NavLink to={"/profile"} className="main-nav-item">
+            <i className="fa fa-user-circle"></i>
+            Tony
+          </NavLink>
+
+          <button
+            className="main-nav-item button-no-style"
+            onClick={() => handleDeconnected()}
+          >
+            <i className="fa fa-sign-out"></i>
+            Sign Out
+          </button>
+        </div>
+      ) : (
+        <div>
+          <NavLink to={"/login"} className="main-nav-item">
+            <i className="fa fa-user-circle"></i>
+            Sign In
+          </NavLink>
+        </div>
+      )}
     </nav>
   );
 };
