@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { loginInt } from "../models";
 import { connectUser } from "../services/login";
 import { useNavigate } from "react-router";
@@ -6,11 +6,12 @@ import { useNavigate } from "react-router";
 type Props = {
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setUserData: React.Dispatch<React.SetStateAction<{}>>;
 };
 
-const Login = ({ loggedIn, setLoggedIn }: Props) => {
+const Login = ({ loggedIn, setLoggedIn, setUserData }: Props) => {
   const formLogin = useRef<HTMLFormElement>(null);
-  const [userData, setUserData] = useState(null);
+
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,11 +37,10 @@ const Login = ({ loggedIn, setLoggedIn }: Props) => {
 
   useEffect(() => {
     if (loggedIn && formLogin.current !== null) {
-      console.log(userData);
       formLogin.current.reset();
       navigate("/profile");
     }
-  }, [loggedIn, navigate, userData]);
+  }, [loggedIn, navigate]);
 
   return (
     <main className="main bg-dark">
