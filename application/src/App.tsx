@@ -6,19 +6,33 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import { useState } from "react";
 import Profile from "./pages/Profile";
+import { userDataInt } from "./models";
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState<userDataInt>({});
   return (
     <BrowserRouter>
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+      <Header
+        loggedIn={loggedIn}
+        setLoggedIn={setLoggedIn}
+        userData={userData}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="/login"
-          element={<Login loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+          element={
+            <Login
+              loggedIn={loggedIn}
+              setLoggedIn={setLoggedIn}
+              setUserData={setUserData}
+            />
+          }
         />
-        {loggedIn && <Route path="/profile" element={<Profile />} />}
+        {loggedIn && userData && (
+          <Route path="/profile" element={<Profile userData={userData} />} />
+        )}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

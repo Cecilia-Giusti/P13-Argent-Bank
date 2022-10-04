@@ -1,11 +1,13 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { userDataInt } from "../models";
 
 type Props = {
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  userData: userDataInt;
 };
 
-const Header = ({ loggedIn, setLoggedIn }: Props) => {
+const Header = ({ loggedIn, setLoggedIn, userData }: Props) => {
   const naviguate = useNavigate();
   const handleDeconnected = () => {
     setLoggedIn(false);
@@ -22,11 +24,11 @@ const Header = ({ loggedIn, setLoggedIn }: Props) => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </NavLink>
-      {loggedIn ? (
+      {loggedIn && userData ? (
         <div>
           <NavLink to={"/profile"} className="main-nav-item">
             <i className="fa fa-user-circle"></i>
-            Tony
+            {userData.firstName}
           </NavLink>
 
           <button
