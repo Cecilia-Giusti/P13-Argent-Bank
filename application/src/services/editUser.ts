@@ -1,53 +1,24 @@
+import { AnyAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { editUserDataInt, userDataInt } from "../models";
-
-type UpdateUserResponse = {
-  name: string;
-  job: string;
-  updatedAt: string;
-};
-
-type CreateUserResponse = {
-  body: userDataInt;
-};
+import { Dispatch } from "react";
+import { editUserData } from "../feature/userSlice";
+import { editUserDataInt } from "../models";
 
 export const editUser = (
   newDataUser: editUserDataInt,
   token: string,
-  setUserData: React.Dispatch<React.SetStateAction<{}>>,
-  editMessage: Element | null
+  editMessage: Element | null,
+  dispatch: Dispatch<AnyAction>
 ) => {
   axios
-    .put<UpdateUserResponse>(
-      "http://localhost:3001/api/v1/user/profile",
-      newDataUser,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    .put("http://localhost:3001/api/v1/user/profile", newDataUser, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
     .then(() => {
-      axios
-        .post<CreateUserResponse>(
-          "http://localhost:3001/api/v1/user/profile",
-          "",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res_1) => {
-          setUserData(res_1.data.body);
-        })
-        .catch((error) => {
-          console.log(error);
-          if (editMessage) {
-            editMessage.innerHTML = `<p class="error">There was a mistake, please try again later. </p>`;
-          }
-        });
+      dispatch(editUserData(newDataUser));
     })
     .catch((error) => {
       console.log(error);

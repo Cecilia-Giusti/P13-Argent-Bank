@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { userDataInt } from "../models";
+import { editUserDataInt, userDataInt } from "../models";
 
 interface UserSlice {
   user: userDataInt | null;
+  isEdit: boolean;
 }
 
 const initialState: UserSlice = {
   user: null,
+  isEdit: false,
 };
 
 export const userSlice = createSlice({
@@ -19,8 +21,19 @@ export const userSlice = createSlice({
     resetUserData: (state, action: PayloadAction<null>) => {
       state.user = action.payload;
     },
+    editUserData: (state, action: PayloadAction<editUserDataInt>) => {
+      state.user = {
+        ...state.user,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+      };
+    },
+    isEditing: (state, action: PayloadAction<boolean>) => {
+      state.isEdit = action.payload;
+    },
   },
 });
 
-export const { setUserData, resetUserData } = userSlice.actions;
+export const { setUserData, resetUserData, editUserData, isEditing } =
+  userSlice.actions;
 export default userSlice.reducer;

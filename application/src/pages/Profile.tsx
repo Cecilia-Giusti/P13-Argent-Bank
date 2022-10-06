@@ -1,12 +1,15 @@
 import Account from "../components/Account";
-import { accountDataInt, editUserDataInt, userDataInt } from "../models";
-import { useState, useRef } from "react";
+import { accountDataInt, editUserDataInt } from "../models";
+import { useRef } from "react";
 import { editUser } from "../services/editUser";
-import { useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { isEditing } from "../feature/userSlice";
 
 const Profile = () => {
-  const [isEditing, setIsEditing] = useState(false);
   const userData = useAppSelector((state) => state.user.user);
+  const token = useAppSelector((state) => state.connected.token);
+  const dispatch = useAppDispatch();
+  const isEdit = useAppSelector((state) => state.user.isEdit);
 
   const formEditUser = useRef<HTMLFormElement>(null);
 
@@ -40,24 +43,23 @@ const Profile = () => {
       const newFirstName = formEditUser.current[0] as HTMLInputElement;
       const newLastName = formEditUser.current[1] as HTMLInputElement;
 
-      if (userData) {
+      if (userData && token) {
         const newDataUser: editUserDataInt = {
           firstName: newFirstName.value
             ? newFirstName.value
             : userData.firstName,
           lastName: newLastName.value ? newLastName.value : userData.lastName,
         };
+        // PUT
+        editUser(newDataUser, token, editMessage, dispatch);
+        dispatch(isEditing(false));
       }
-
-      // PUT
-      // editUser(newDataUser, token, editMessage);
-      // setIsEditing(false);
     }
   };
 
   return (
     <main className="main bg-dark">
-      {isEditing && userData ? (
+      {isEdit && userData ? (
         <div className="header">
           <h1>Welcome back</h1>
           <form ref={formEditUser} onSubmit={(e) => handleSubmit(e)}>
@@ -78,7 +80,7 @@ const Profile = () => {
             <input
               type="button"
               className=" edit-button-active"
-              onClick={() => setIsEditing(false)}
+              onClick={() => dispatch(isEditing(false))}
               value="Cancel"
             />
             <div className="editMessage"></div>
@@ -91,7 +93,10 @@ const Profile = () => {
             <br />
             {userData?.firstName} {userData?.lastName}
           </h1>
-          <button className="edit-button" onClick={() => setIsEditing(true)}>
+          <button
+            className="edit-button"
+            onClick={() => dispatch(isEditing(true))}
+          >
             Edit Name
           </button>
         </div>
