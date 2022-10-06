@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { setIsConnected } from "../feature/connectedSlice";
+import { getToken, setIsConnected } from "../feature/connectedSlice";
 import { resetUserData } from "../feature/userSlice";
 
 const Header = () => {
@@ -12,6 +12,7 @@ const Header = () => {
   const handleDeconnected = () => {
     dispatch(resetUserData(null));
     dispatch(setIsConnected(false));
+    dispatch(getToken(null));
     return naviguate("/");
   };
 
