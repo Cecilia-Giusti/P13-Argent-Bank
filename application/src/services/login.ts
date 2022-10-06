@@ -1,8 +1,8 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Dispatch } from "react";
+import { getToken, setIsConnected } from "../feature/connectedSlice";
 import { setUserData } from "../feature/userSlice";
-
 import { loginInt, userDataInt } from "../models";
 
 type CreateUserResponse = {
@@ -12,15 +12,14 @@ type CreateUserResponse = {
 export const connectUser = async (
   data: loginInt,
   formMessage: Element | null,
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
-  setToken: React.Dispatch<React.SetStateAction<string>>,
   dispatch: Dispatch<AnyAction>
 ) => {
   try {
     await axios
       .post("http://localhost:3001/api/v1/user/login", data)
       .then((res) => {
-        setToken(res.data.body.token);
+        dispatch(getToken(res.data.body.token));
+
         axios
           .post<CreateUserResponse>(
             "http://localhost:3001/api/v1/user/profile",
@@ -32,7 +31,7 @@ export const connectUser = async (
             }
           )
           .then((res_1) => {
-            setLoggedIn(true);
+            dispatch(setIsConnected(true));
             dispatch(setUserData(res_1.data.body));
           });
       });

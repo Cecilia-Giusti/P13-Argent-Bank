@@ -2,14 +2,11 @@ import Account from "../components/Account";
 import { accountDataInt, editUserDataInt, userDataInt } from "../models";
 import { useState, useRef } from "react";
 import { editUser } from "../services/editUser";
+import { useAppSelector } from "../app/hooks";
 
-type Props = {
-  userData: userDataInt;
-  token: string;
-};
-
-const Profile = ({ userData, token }: Props) => {
+const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const userData = useAppSelector((state) => state.user.user);
 
   const formEditUser = useRef<HTMLFormElement>(null);
 
@@ -43,10 +40,14 @@ const Profile = ({ userData, token }: Props) => {
       const newFirstName = formEditUser.current[0] as HTMLInputElement;
       const newLastName = formEditUser.current[1] as HTMLInputElement;
 
-      const newDataUser: editUserDataInt = {
-        firstName: newFirstName.value ? newFirstName.value : userData.firstName,
-        lastName: newLastName.value ? newLastName.value : userData.lastName,
-      };
+      if (userData) {
+        const newDataUser: editUserDataInt = {
+          firstName: newFirstName.value
+            ? newFirstName.value
+            : userData.firstName,
+          lastName: newLastName.value ? newLastName.value : userData.lastName,
+        };
+      }
 
       // PUT
       // editUser(newDataUser, token, editMessage);
@@ -56,7 +57,7 @@ const Profile = ({ userData, token }: Props) => {
 
   return (
     <main className="main bg-dark">
-      {isEditing ? (
+      {isEditing && userData ? (
         <div className="header">
           <h1>Welcome back</h1>
           <form ref={formEditUser} onSubmit={(e) => handleSubmit(e)}>
@@ -88,7 +89,7 @@ const Profile = ({ userData, token }: Props) => {
           <h1>
             Welcome back
             <br />
-            {userData.firstName} {userData.lastName}
+            {userData?.firstName} {userData?.lastName}
           </h1>
           <button className="edit-button" onClick={() => setIsEditing(true)}>
             Edit Name
