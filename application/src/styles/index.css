@@ -132,6 +132,31 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
+.error-content {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.error-content h1 {
+  font-size: 50px;
+  margin-bottom: 0;
+}
+
+.error-content p {
+  font-size: 40px;
+}
+
+.error-content a {
+  color: white;
+  font-size: 20px;
+}
+.error-content a:hover {
+  color: #00bc77;
+  text-decoration: none;
+}
+
 @media (min-width: 920px) {
   .hero {
     height: 400px;

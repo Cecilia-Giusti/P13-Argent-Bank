@@ -3,7 +3,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
+import Error from "./pages/Error";
 import { useState } from "react";
 import Profile from "./pages/Profile";
 import { userDataInt } from "./models";
@@ -12,6 +12,7 @@ const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState<userDataInt>({});
   const [token, setToken] = useState("");
+
   return (
     <BrowserRouter>
       <Header
@@ -44,7 +45,8 @@ const App: React.FC = () => {
             }
           />
         )}
-        <Route path="*" element={<NotFound />} />
+
+        <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
     </BrowserRouter>
