@@ -2,18 +2,13 @@ import { useRef, useEffect } from "react";
 import { loginInt } from "../models";
 import { connectUser } from "../services/login";
 import { useNavigate } from "react-router";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 
-type Props = {
-  loggedIn: boolean;
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  setUserData: React.Dispatch<React.SetStateAction<{}>>;
-  setToken: React.Dispatch<React.SetStateAction<string>>;
-};
-
-const Login = ({ loggedIn, setLoggedIn, setUserData, setToken }: Props) => {
+const Login = () => {
   const formLogin = useRef<HTMLFormElement>(null);
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const loggedIn = useAppSelector((state) => state.connected.isConnected);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +27,7 @@ const Login = ({ loggedIn, setLoggedIn, setUserData, setToken }: Props) => {
       };
 
       // POST
-      connectUser(newLogin, formMessage, setUserData, setLoggedIn, setToken);
+      connectUser(newLogin, formMessage, dispatch);
     }
   };
 

@@ -11,12 +11,12 @@ export interface loginInt {
 }
 
 export interface userDataInt {
-  createdAt?: string;
   email?: string;
   firstName?: string;
-  id?: string;
   lastName?: string;
+  createdAt?: string;
   updatedAt?: string;
+  id?: string;
 }
 
 export interface accountDataInt {

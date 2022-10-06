@@ -4,46 +4,21 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Error from "./pages/Error";
-import { useState } from "react";
 import Profile from "./pages/Profile";
-import { userDataInt } from "./models";
+import { useAppSelector } from "./app/hooks";
 
 const App: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userData, setUserData] = useState<userDataInt>({});
-  const [token, setToken] = useState("");
+  const userData = useAppSelector((state) => state.user.user);
+  const loggedIn = useAppSelector((state) => state.connected.isConnected);
 
   return (
     <BrowserRouter>
-      <Header
-        loggedIn={loggedIn}
-        setLoggedIn={setLoggedIn}
-        userData={userData}
-      />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/login"
-          element={
-            <Login
-              loggedIn={loggedIn}
-              setLoggedIn={setLoggedIn}
-              setUserData={setUserData}
-              setToken={setToken}
-            />
-          }
-        />
+        <Route path="/login" element={<Login />} />
         {loggedIn && userData && (
-          <Route
-            path="/profile"
-            element={
-              <Profile
-                userData={userData}
-                token={token}
-                setUserData={setUserData}
-              />
-            }
-          />
+          <Route path="/profile" element={<Profile />} />
         )}
 
         <Route path="*" element={<Error />} />
