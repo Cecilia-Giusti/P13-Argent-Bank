@@ -6,12 +6,12 @@ import Login from "./pages/Login";
 import Error from "./pages/Error";
 import { useState } from "react";
 import Profile from "./pages/Profile";
-import { userDataInt } from "./models";
+import { useAppSelector } from "./app/hooks";
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userData, setUserData] = useState<userDataInt>({});
   const [token, setToken] = useState("");
+  const userData = useAppSelector((state) => state.user.user);
 
   return (
     <BrowserRouter>
@@ -28,7 +28,6 @@ const App: React.FC = () => {
             <Login
               loggedIn={loggedIn}
               setLoggedIn={setLoggedIn}
-              setUserData={setUserData}
               setToken={setToken}
             />
           }
@@ -36,13 +35,7 @@ const App: React.FC = () => {
         {loggedIn && userData && (
           <Route
             path="/profile"
-            element={
-              <Profile
-                userData={userData}
-                token={token}
-                setUserData={setUserData}
-              />
-            }
+            element={<Profile userData={userData} token={token} />}
           />
         )}
 

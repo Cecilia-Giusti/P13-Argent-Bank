@@ -1,5 +1,5 @@
 import axios from "axios";
-import { editUserDataInt } from "../models";
+import { editUserDataInt, userDataInt } from "../models";
 
 type UpdateUserResponse = {
   name: string;
@@ -8,12 +8,7 @@ type UpdateUserResponse = {
 };
 
 type CreateUserResponse = {
-  body: {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-  };
+  body: userDataInt;
 };
 
 export const editUser = (

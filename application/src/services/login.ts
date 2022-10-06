@@ -1,42 +1,40 @@
+import { AnyAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { loginInt } from "../models";
+import { Dispatch } from "react";
+import { setUserData } from "../feature/userSlice";
+
+import { loginInt, userDataInt } from "../models";
 
 type CreateUserResponse = {
-  body: {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-  };
+  body: userDataInt;
 };
 
 export const connectUser = async (
   data: loginInt,
   formMessage: Element | null,
-  setUserData: React.Dispatch<React.SetStateAction<{}>>,
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
-  setToken: React.Dispatch<React.SetStateAction<string>>
+  setToken: React.Dispatch<React.SetStateAction<string>>,
+  dispatch: Dispatch<AnyAction>
 ) => {
   try {
-    const res = await axios.post(
-      "http://localhost:3001/api/v1/user/login",
-      data
-    );
-    setToken(res.data.body.token);
-
-    axios
-      .post<CreateUserResponse>(
-        "http://localhost:3001/api/v1/user/profile",
-        "",
-        {
-          headers: {
-            Authorization: `Bearer ${res.data.body.token}`,
-          },
-        }
-      )
-      .then((res_1) => {
-        setLoggedIn(true);
-        setUserData(res_1.data.body);
+    await axios
+      .post("http://localhost:3001/api/v1/user/login", data)
+      .then((res) => {
+        setToken(res.data.body.token);
+        axios
+          .post<CreateUserResponse>(
+            "http://localhost:3001/api/v1/user/profile",
+            "",
+            {
+              headers: {
+                Authorization: `Bearer ${res.data.body.token}`,
+              },
+            }
+          )
+          .then((res_1) => {
+            setLoggedIn(true);
+            dispatch(setUserData(res_1.data.body));
+          });
       });
   } catch (err: any) {
     console.log(err);

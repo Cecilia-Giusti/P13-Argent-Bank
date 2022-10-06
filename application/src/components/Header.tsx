@@ -1,16 +1,20 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
+import { resetUserData } from "../feature/userSlice";
 import { userDataInt } from "../models";
 
 type Props = {
   loggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  userData: userDataInt;
+  userData: userDataInt | null;
 };
 
 const Header = ({ loggedIn, setLoggedIn, userData }: Props) => {
+  const dispatch = useAppDispatch();
   const naviguate = useNavigate();
   const handleDeconnected = () => {
     setLoggedIn(false);
+    dispatch(resetUserData(null));
     return naviguate("/");
   };
 

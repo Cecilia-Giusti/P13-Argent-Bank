@@ -6,10 +6,9 @@ import { editUser } from "../services/editUser";
 type Props = {
   userData: userDataInt;
   token: string;
-  setUserData: React.Dispatch<React.SetStateAction<{}>>;
 };
 
-const Profile = ({ userData, token, setUserData }: Props) => {
+const Profile = ({ userData, token }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const formEditUser = useRef<HTMLFormElement>(null);
@@ -50,8 +49,8 @@ const Profile = ({ userData, token, setUserData }: Props) => {
       };
 
       // PUT
-      editUser(newDataUser, token, setUserData, editMessage);
-      setIsEditing(false);
+      // editUser(newDataUser, token, editMessage);
+      // setIsEditing(false);
     }
   };
 
