@@ -10,6 +10,10 @@ const initialState: ConnectedSlice = {
   token: null,
 };
 
+/**
+ * Create Slice for Redux - used for connection
+ * @function
+ */
 export const connectedSlice = createSlice({
   name: "connected",
   initialState,

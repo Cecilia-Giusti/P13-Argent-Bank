@@ -9,11 +9,20 @@ type CreateUserResponse = {
   body: userDataInt;
 };
 
+/**
+ * Function to connect the user
+ * @function
+ * @async
+ * @param {loginInt} data - the user’s email and password
+ * @param {Element|null} formMessage - location of the error message
+ * @param {Dispatch<AnyAction>} dispatch - hook useDispatch in const
+ * @return {Promise<void>}
+ */
 export const connectUser = async (
   data: loginInt,
   formMessage: Element | null,
   dispatch: Dispatch<AnyAction>
-) => {
+): Promise<void> => {
   try {
     await axios
       .post("http://localhost:3001/api/v1/user/login", data)

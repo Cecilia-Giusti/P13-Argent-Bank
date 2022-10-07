@@ -3,13 +3,22 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { getToken, setIsConnected } from "../feature/connectedSlice";
 import { resetUserData } from "../feature/userSlice";
 
-const Header = () => {
+/**
+ * Component to display the header
+ * @component
+ * @return {JSX.Element}
+ */
+const Header = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const naviguate = useNavigate();
   const userData = useAppSelector((state) => state.user.user);
   const loggedIn = useAppSelector((state) => state.connected.isConnected);
 
-  const handleDeconnected = () => {
+  /**
+   * Function disconnects the user
+   * @return {void}
+   */
+  const handleDeconnected = (): void => {
     dispatch(resetUserData(null));
     dispatch(setIsConnected(false));
     dispatch(getToken(null));

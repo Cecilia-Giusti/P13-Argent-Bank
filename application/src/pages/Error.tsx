@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-const Error = () => {
+/**
+ * Component to display the error page
+ * @component
+ * @return {JSX.Element}
+ */
+const Error: React.FC = (): JSX.Element => {
   return (
     <main className="main bg-dark">
       <section className="error-content">

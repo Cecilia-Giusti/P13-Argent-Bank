@@ -4,7 +4,13 @@ type Props = {
   account: accountDataInt;
 };
 
-const Account = ({ account }: Props) => {
+/**
+ * Component to view account details
+ * @component
+ * @param {accountDataInt} account - Acoount user
+ * @return {JSX.Element}
+ */
+const Account = ({ account }: Props): JSX.Element => {
   return (
     <section className="account">
       <div className="account-content-wrapper">

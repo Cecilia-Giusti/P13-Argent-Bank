@@ -4,13 +4,24 @@ import { connectUser } from "../services/login";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 
-const Login = () => {
+/**
+ * Component to display the login page
+ * @component
+ * @return {JSX.Element}
+ */
+const Login: React.FC = (): JSX.Element => {
   const formLogin = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loggedIn = useAppSelector((state) => state.connected.isConnected);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /**
+   * Function sending the form when user wants to log in
+   * @function
+   * @param {React.FormEvent} e - Event at the submission of the form
+   * @return {void}
+   */
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     const formMessage = document.querySelector(".formMessage");
     if (formMessage !== null) {
@@ -26,7 +37,6 @@ const Login = () => {
         password: newPassword.value,
       };
 
-      // POST
       connectUser(newLogin, formMessage, dispatch);
     }
   };

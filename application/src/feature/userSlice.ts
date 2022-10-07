@@ -11,6 +11,10 @@ const initialState: UserSlice = {
   isEdit: false,
 };
 
+/**
+ * Create Slice for Redux - used for user data
+ * @function
+ */
 export const userSlice = createSlice({
   name: "user",
   initialState,

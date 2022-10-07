@@ -4,7 +4,15 @@ type Props = {
   item: featureDataItem;
 };
 
-const FeatureItem: React.FunctionComponent<Props> = ({ item }: Props) => {
+/**
+ * Component to display a banking service
+ * @component
+ * @param {featureDataItem} item - banking servive
+ * @return {JSX.Element}
+ */
+const FeatureItem: React.FunctionComponent<Props> = ({
+  item,
+}: Props): JSX.Element => {
   return (
     <div className="feature-item">
       <img src={item.img} alt="Chat Icon" className="feature-icon" />

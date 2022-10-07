@@ -1,4 +1,9 @@
-const Hero: React.FC = () => {
+/**
+ * Component to display a ban with a hero
+ * @component
+ * @return {JSX.Element}
+ */
+const Hero: React.FC = (): JSX.Element => {
   return (
     <section className="hero-content">
       <h2 className="sr-only">Promoted Content</h2>

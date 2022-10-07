@@ -5,7 +5,30 @@ import { editUser } from "../services/user";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { isEditing } from "../feature/userSlice";
 
-const Profile = () => {
+const accountData: accountDataInt[] = [
+  {
+    title: "Argent Bank Checking (x8349)",
+    amount: 2082.79,
+    description: "Available Balance",
+  },
+  {
+    title: "Argent Bank Savings (x6712)",
+    amount: 10928.42,
+    description: "Available Balance",
+  },
+  {
+    title: "Argent Bank Credit Card (x8349)",
+    amount: 184.3,
+    description: "Current Balance",
+  },
+];
+
+/**
+ * Component to display the profile page
+ * @component
+ * @return {JSX.Element}
+ */
+const Profile = (): JSX.Element => {
   const userData = useAppSelector((state) => state.user.user);
   const token = useAppSelector((state) => state.connected.token);
   const dispatch = useAppDispatch();
@@ -13,25 +36,13 @@ const Profile = () => {
 
   const formEditUser = useRef<HTMLFormElement>(null);
 
-  const accountData: accountDataInt[] = [
-    {
-      title: "Argent Bank Checking (x8349)",
-      amount: 2082.79,
-      description: "Available Balance",
-    },
-    {
-      title: "Argent Bank Savings (x6712)",
-      amount: 10928.42,
-      description: "Available Balance",
-    },
-    {
-      title: "Argent Bank Credit Card (x8349)",
-      amount: 184.3,
-      description: "Current Balance",
-    },
-  ];
-
-  const handleSubmit = (e: React.FormEvent) => {
+  /**
+   * Function sending the form when user changes his data
+   * @function
+   * @param {React.FormEvent} e - Event at the submission of the form
+   * @return {void}
+   */
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
 
     const editMessage = document.querySelector(".editMessage");
@@ -50,7 +61,7 @@ const Profile = () => {
             : userData.firstName,
           lastName: newLastName.value ? newLastName.value : userData.lastName,
         };
-        // PUT
+
         editUser(newDataUser, token, editMessage, dispatch);
         dispatch(isEditing(false));
       }
