@@ -1,7 +1,7 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Dispatch } from "react";
-import { editUserData } from "../feature/userSlice";
+import { editUserData } from "../slices/userSlice";
 import { editUserDataInt } from "../models";
 
 /**

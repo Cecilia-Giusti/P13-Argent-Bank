@@ -1,8 +1,8 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Dispatch } from "react";
-import { getToken, setIsConnected } from "../feature/connectedSlice";
-import { setUserData } from "../feature/userSlice";
+import { getToken, setIsConnected } from "../slices/connectedSlice";
+import { setUserData } from "../slices/userSlice";
 import { loginInt, userDataInt } from "../models";
 
 type CreateUserResponse = {

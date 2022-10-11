@@ -3,7 +3,7 @@ import { accountDataInt, editUserDataInt } from "../models";
 import { useRef } from "react";
 import { editUser } from "../services/user";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { isEditing } from "../feature/userSlice";
+import { isEditing } from "../slices/userSlice";
 
 const accountData: accountDataInt[] = [
   {

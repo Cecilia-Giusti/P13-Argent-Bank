@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getToken, setIsConnected } from "../feature/connectedSlice";
-import { resetUserData } from "../feature/userSlice";
+import { getToken, setIsConnected } from "../slices/connectedSlice";
+import { resetUserData } from "../slices/userSlice";
 
 /**
  * Component to display the header
