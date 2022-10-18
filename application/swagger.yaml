@@ -29,8 +29,8 @@ paths:
           description: User accounts are retrieved successully
           schema:
             $ref: "#/definitions/Accounts"
-        "400":
-          description: Invalid Fields
+        "401":
+          description: Authentication is required to access the resource
         "500":
           description: Internal Server Error
 
@@ -70,8 +70,10 @@ paths:
           description: User transactions are retrieved successully
           schema:
             $ref: "#/definitions/Transactions"
-        "400":
-          description: Invalid Fields
+        "204":
+          description: Request processed successfully but no information to be returned.
+        "401":
+          description: Authentication is required to access the resource
         "500":
           description: Internal Server Error
 
@@ -109,8 +111,10 @@ paths:
                 type: string
               body:
                 $ref: "#/definitions/Transaction"
-        "400":
-          description: Invalid Fields
+        "204":
+          description: Request processed successfully but no information to be returned.
+        "401":
+          description: Authentication is required to access the resource
         "500":
           description: Internal Server Error
     put:
@@ -157,7 +161,9 @@ paths:
               body:
                 $ref: "#/definitions/Transaction"
         "400":
-          description: Invalid Fields
+          description: The query syntax is wrong.
+        "404":
+          description: Resource not found.
         "500":
           description: Internal Server Error
 
